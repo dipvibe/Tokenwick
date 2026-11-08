@@ -1,4 +1,4 @@
-# Quota Goblin: Claude Code usage in your Mac menu bar
+# Tokenwick: Claude Code usage in your Mac menu bar
 
 > ### 🌙 The backstory
 >
@@ -51,7 +51,7 @@ How it gets there:
 - New lines are read incrementally, in small chunks, so even large logs use little memory.
 - **The headline number leaves out cache reads.** Each time Claude Code replies, it re-reads the conversation so far from a cache. Those cache reads are usually over 90% of all tokens, but they cost about a tenth as much and count far less toward your limits, so including them would make your usage look dozens of times bigger. They're shown on their own line instead.
 - Each response is counted once (deduplicated by message ID and request ID), even if it appears in several files.
-- Totals are kept in the app's own cache in `~/Library/Application Support/QuotaGoblin/`, readable only by you. Claude Code deletes logs after 30 days by default, but your totals stay. **All time** therefore starts from the oldest log Claude Code still had when you first ran the app.
+- Totals are kept in the app's own cache in `~/Library/Application Support/Tokenwick/`, readable only by you. Claude Code deletes logs after 30 days by default, but your totals stay. **All time** therefore starts from the oldest log Claude Code still had when you first ran the app.
 - Days follow your local time zone.
 - Only usage that Claude Code logs is counted. Chats on claude.ai or in the desktop app aren't included.
 
@@ -71,7 +71,7 @@ Requires macOS 14 (Sonoma) or later, on Apple Silicon or Intel. For the numbers 
 Paste this into Terminal:
 
 ```sh
-curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/dipvibe/claude-goblin-menubar/main/scripts/install.sh | bash
+curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/dipvibe/tokenwick/main/scripts/install.sh | bash
 ```
 
 The installer:
@@ -85,7 +85,7 @@ The icon appears in your menu bar. Run the same command again to update.
 To uninstall (this also removes the app's saved data, but never your Claude Code logs):
 
 ```sh
-curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/dipvibe/claude-goblin-menubar/main/scripts/install.sh | bash -s -- --uninstall
+curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/dipvibe/tokenwick/main/scripts/install.sh | bash -s -- --uninstall
 ```
 
 Prefer to read a script before running it? Open [`scripts/install.sh`](scripts/install.sh) first. It's short.
@@ -94,54 +94,54 @@ Prefer to read a script before running it? Open [`scripts/install.sh`](scripts/i
 
 In Claude Code, say:
 
-> Install Quota Goblin by running `curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/dipvibe/claude-goblin-menubar/main/scripts/install.sh | bash`
+> Install Tokenwick by running `curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/dipvibe/tokenwick/main/scripts/install.sh | bash`
 
 Claude Code will ask your permission, run it, and the icon will appear in your menu bar.
 
 ### Download the app (DMG)
 
-1. Download `QuotaGoblin.dmg` from [Releases](https://github.com/dipvibe/claude-goblin-menubar/releases/latest).
-2. Open it and drag **QuotaGoblin** onto the **Applications** folder.
+1. Download `Tokenwick.dmg` from [Releases](https://github.com/dipvibe/tokenwick/releases/latest).
+2. Open it and drag **Tokenwick** onto the **Applications** folder.
 3. Open it from Applications. The first time, macOS blocks it: the app isn't notarized by Apple, which needs a paid developer account. Go to **System Settings → Privacy & Security** and click **Open Anyway**. You only do this once.
 
-The one-command installer avoids step 3. A `QuotaGoblin.zip` of the same app is on the Releases page too.
+The one-command installer avoids step 3. A `Tokenwick.zip` of the same app is on the Releases page too.
 
 ### Build from source
 
 You need either Xcode or just the Command Line Tools (`xcode-select --install`).
 
 ```sh
-git clone https://github.com/dipvibe/claude-goblin-menubar.git
-cd claude-goblin-menubar
+git clone https://github.com/dipvibe/tokenwick.git
+cd tokenwick
 ./scripts/bundle.sh
-open build/QuotaGoblin.app
+open build/Tokenwick.app
 ```
 
-To keep it, move `build/QuotaGoblin.app` to `/Applications`, then tick **Launch at login** in the panel.
+To keep it, move `build/Tokenwick.app` to `/Applications`, then tick **Launch at login** in the panel.
 
 ### For AI agents
 
 If you're an AI coding agent asked to install this app for a user:
 
 1. **Requirements:** macOS 14 or later (`sw_vers -productVersion`). No other dependencies.
-2. **Install or update:** `curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/dipvibe/claude-goblin-menubar/main/scripts/install.sh | bash`. It exits non-zero with a clear message on any failure, and installs nothing if verification fails.
-3. **Check it worked:** `pgrep -x QuotaGoblin` prints a process ID once it's running.
-4. **Options:** `QG_INSTALL_DIR=<dir>` installs elsewhere. `QG_NO_LAUNCH=1` skips opening the app.
+2. **Install or update:** `curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/dipvibe/tokenwick/main/scripts/install.sh | bash`. It exits non-zero with a clear message on any failure, and installs nothing if verification fails.
+3. **Check it worked:** `pgrep -x Tokenwick` prints a process ID once it's running.
+4. **Options:** `TOKENWICK_INSTALL_DIR=<dir>` installs elsewhere. `TOKENWICK_NO_LAUNCH=1` skips opening the app.
 5. **Uninstall:** add `-s -- --uninstall` after `bash`.
 6. **Tell the user:** the icon is in the menu bar. Click it for details. Tick "Launch at login" to start it automatically. Limits need Claude Code to be signed in.
-7. **Check usage before long tasks:** run `/Applications/QuotaGoblin.app/Contents/MacOS/QuotaGoblin --status`. It prints JSON like `{"session":{"percent_used":84,"resets_at":"…"},"weekly":{…},"extra_usage":{"enabled":false,…}}`, or `{"error":"…"}` with exit code 1. If the session is nearly used up, pause until `resets_at`. It never prints the login token.
+7. **Check usage before long tasks:** run `/Applications/Tokenwick.app/Contents/MacOS/Tokenwick --status`. It prints JSON like `{"session":{"percent_used":84,"resets_at":"…"},"weekly":{…},"extra_usage":{"enabled":false,…}}`, or `{"error":"…"}` with exit code 1. If the session is nearly used up, pause until `resets_at`. It never prints the login token.
 
 ## Command line
 
 ```sh
-/Applications/QuotaGoblin.app/Contents/MacOS/QuotaGoblin --status
+/Applications/Tokenwick.app/Contents/MacOS/Tokenwick --status
 ```
 
 This prints your current session and weekly limits and your extra usage as JSON, then exits. Use it in scripts, status lines, or to let an AI agent pace itself. It prints only percentages, reset times and amounts spent, never your login token.
 
 ## Custom menu bar icon
 
-The app shows the little orange Claude Code mascot (from [`assets/`](assets)) in your menu bar. To use a different icon, put an image named `MenuBarIcon` in `~/Library/Application Support/QuotaGoblin/`, then quit and reopen the app. No rebuild is needed.
+The app shows the little orange Claude Code mascot (from [`assets/`](assets)) in your menu bar. To use a different icon, put an image named `MenuBarIcon` in `~/Library/Application Support/Tokenwick/`, then quit and reopen the app. No rebuild is needed.
 
 - **Formats:** PDF, SVG or PNG, up to 2 MB. It's scaled to fit 18×18 pt.
 - **Looks best:** a square image with a transparent background.
@@ -153,23 +153,23 @@ To go back to the mascot, delete your file and reopen the app.
 
 | Problem | Fix |
 |---|---|
-| I can't see the icon | macOS hides menu bar icons that don't fit, and on MacBooks with a notch they can end up behind it. Quit a few other menu bar apps, or hold ⌘ and drag the icon further right. Run `pgrep -x QuotaGoblin` to check it's running. |
+| I can't see the icon | macOS hides menu bar icons that don't fit, and on MacBooks with a notch they can end up behind it. Quit a few other menu bar apps, or hold ⌘ and drag the icon further right. Run `pgrep -x Tokenwick` to check it's running. |
 | "Claude Code login expired" | Open Claude Code and send any message. It refreshes its login, and the app picks it up within a few minutes. |
 | "Sign in to Claude Code to see your limits" | Install [Claude Code](https://docs.claude.com/en/docs/claude-code) and run `claude` to sign in. |
 | "No Claude Code usage found yet" | Use Claude Code once. Token stats appear within a minute. |
 | Limits show an error, but token stats work | The limits come from an unofficial endpoint that may have changed. Please [open an issue](../../issues). |
 | macOS says the app "can't be opened" | You downloaded the DMG or zip in a browser. Go to System Settings → Privacy & Security → **Open Anyway** (once), or use the one-command installer. |
 | I want it to start automatically | Click the icon and tick **Launch at login**. |
-| The menu bar stays visible over a full-screen app | Fixed in current versions: closing the panel hands focus back to your app, so the menu bar auto-hides again. If it still happens, quit Quota Goblin and check **System Settings → Menu Bar → Automatically hide and show the menu bar** ("In Full Screen Only" is the macOS default). |
+| The menu bar stays visible over a full-screen app | Fixed in current versions: closing the panel hands focus back to your app, so the menu bar auto-hides again. If it still happens, quit Tokenwick and check **System Settings → Menu Bar → Automatically hide and show the menu bar** ("In Full Screen Only" is the macOS default). |
 
 ## Development
 
 ```sh
 ./scripts/test.sh                       # unit tests (Swift Testing)
 UNIVERSAL=0 ./scripts/bundle.sh         # faster app build, this Mac's architecture only
-./scripts/dmg.sh                        # disk image of build/QuotaGoblin.app
+./scripts/dmg.sh                        # disk image of build/Tokenwick.app
 swift build --build-system native       # debug build
-.build/debug/QuotaGoblin             # run without bundling (launch at login won't work)
+.build/debug/Tokenwick             # run without bundling (launch at login won't work)
 ```
 
 With only the Command Line Tools installed, plain `swift build` fails ("Unknown error parsing property list") and `swift test` can't find Swift Testing. Use `--build-system native` and the scripts above, which handle both.
@@ -178,12 +178,12 @@ To test the installer without publishing a release, point it at a local build:
 
 ```sh
 UNIVERSAL=0 ./scripts/bundle.sh
-QG_DOWNLOAD_BASE="file://$PWD/build" QG_INSTALL_DIR=/tmp/cub-test QG_NO_LAUNCH=1 bash scripts/install.sh
+TOKENWICK_DOWNLOAD_BASE="file://$PWD/build" TOKENWICK_INSTALL_DIR=/tmp/tokenwick-test TOKENWICK_NO_LAUNCH=1 bash scripts/install.sh
 ```
 
 Code layout:
 - `Sources/UsageCore`: log scanning, aggregation, the plan-limits client, safe file reading and formatting. No UI, and fully unit-tested (including corrupted and hostile input).
-- `Sources/QuotaGoblin`: the app. An AppKit `NSStatusItem` (for the hover tooltip) and an `NSPopover` hosting the SwiftUI panel, which is created when it opens and released when it closes.
+- `Sources/Tokenwick`: the app. An AppKit `NSStatusItem` (for the hover tooltip) and an `NSPopover` hosting the SwiftUI panel, which is created when it opens and released when it closes.
 - `assets/`: the bundled menu bar icon.
 - `scripts/`: build, test, packaging and install scripts.
 
@@ -193,7 +193,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 - The app reads your Claude Code login only to fetch your limits, and sends it only to `api.anthropic.com`.
 - It has no analytics, no third-party dependencies, and nothing sensitive is written to disk.
-- Releases are built by GitHub Actions, with a checksum and a signed provenance attestation. You can check where a download came from with `gh attestation verify QuotaGoblin.dmg --repo dipvibe/claude-goblin-menubar` (or `.zip`).
+- Releases are built by GitHub Actions, with a checksum and a signed provenance attestation. You can check where a download came from with `gh attestation verify Tokenwick.dmg --repo dipvibe/tokenwick` (or `.zip`).
 
 See [SECURITY.md](SECURITY.md) for the details, and to **report a vulnerability privately**.
 

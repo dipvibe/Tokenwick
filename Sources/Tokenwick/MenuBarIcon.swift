@@ -3,7 +3,7 @@ import UsageCore
 
 /// Picks the menu bar icon, first match wins:
 ///
-/// 1. The user's own `MenuBarIcon` file in `~/Library/Application Support/QuotaGoblin/`
+/// 1. The user's own `MenuBarIcon` file in `~/Library/Application Support/Tokenwick/`
 ///    (no rebuild needed, just relaunch).
 /// 2. The icon bundled into the app from the repo's `assets/` folder by `scripts/bundle.sh`
 ///    (the Claude Code mascot).
@@ -29,7 +29,7 @@ enum MenuBarIcon {
 
     static func load() -> NSImage {
         if let custom { return custom }
-        let fallback = NSImage(systemSymbolName: "sparkle", accessibilityDescription: "Quota Goblin") ?? NSImage()
+        let fallback = NSImage(systemSymbolName: "sparkle", accessibilityDescription: "Tokenwick") ?? NSImage()
         fallback.isTemplate = true
         return fallback
     }
@@ -37,7 +37,7 @@ enum MenuBarIcon {
     private static func candidates() -> [(URL, Bool)] {
         var dirs: [URL] = []
         if let support = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
-            dirs.append(support.appendingPathComponent("QuotaGoblin"))
+            dirs.append(support.appendingPathComponent("Tokenwick"))
         }
         if let resources = Bundle.main.resourceURL { dirs.append(resources) }
 
@@ -59,7 +59,7 @@ enum MenuBarIcon {
         let scale = min(size.width / max(original.width, 1), size.height / max(original.height, 1))
         image.size = NSSize(width: original.width * scale, height: original.height * scale)
         image.isTemplate = template
-        image.accessibilityDescription = "Quota Goblin"
+        image.accessibilityDescription = "Tokenwick"
         return image
     }
 }

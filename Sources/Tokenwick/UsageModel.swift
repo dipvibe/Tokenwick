@@ -65,7 +65,7 @@ final class UsageModel: ObservableObject {
     // Log scanning runs at background QoS (efficiency cores on Apple silicon). A scan the
     // user is waiting for is boosted per work item.
     private let scanner = LogScanner()
-    private let scanQueue = DispatchQueue(label: "QuotaGoblin.scan", qos: .background,
+    private let scanQueue = DispatchQueue(label: "Tokenwick.scan", qos: .background,
                                           autoreleaseFrequency: .workItem)
     private var watcher: LogWatcher?
     private var watchedDirectories: [URL] = []

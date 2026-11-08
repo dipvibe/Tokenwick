@@ -39,7 +39,7 @@ struct PopoverView: View {
             } else {
                 Image(systemName: "sparkle").foregroundStyle(.orange)
             }
-            Text("Quota Goblin").font(.headline)
+            Text("Tokenwick").font(.headline)
             Spacer()
             if !model.hasScanned { ProgressView().controlSize(.small) } // first scan only, no flicker later
             Button { model.refreshNow() } label: { Image(systemName: "arrow.clockwise") }

@@ -73,7 +73,7 @@ public final class PlanLimitsClient: @unchecked Sendable {
         self.readCredentials = readCredentials
         self.now = now
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "dev"
-        userAgent = "QuotaGoblin/\(version)"
+        userAgent = "Tokenwick/\(version)"
     }
 
     deinit {

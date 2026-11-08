@@ -26,7 +26,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             button.imagePosition = .imageLeading
             button.target = self
             button.action = #selector(togglePopover(_:))
-            button.toolTip = "Quota Goblin"
+            button.toolTip = "Tokenwick"
             // The tooltip is built when the pointer arrives, not on a timer.
             button.addTrackingArea(NSTrackingArea(rect: .zero,
                                                   options: [.mouseEnteredAndExited, .activeAlways, .inVisibleRect],
@@ -129,7 +129,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func tooltipText() -> String {
         let now = Date()
-        var lines = ["Quota Goblin"]
+        var lines = ["Tokenwick"]
         if model.limitsEnabled {
             if let limits = model.limits {
                 if let session = limits.session { lines.append(Self.describe("Session (5h)", session, now: now)) }

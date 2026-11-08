@@ -85,7 +85,7 @@ public final class LogScanner: @unchecked Sendable {
 
     public static func defaultCacheURL() -> URL? {
         FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?
-            .appendingPathComponent("QuotaGoblin/usage-cache.plist")
+            .appendingPathComponent("Tokenwick/usage-cache.plist")
     }
 
     /// Full scan: finds every log file and reads any new lines. Used at launch and as a

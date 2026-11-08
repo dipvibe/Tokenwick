@@ -1,7 +1,7 @@
 import AppKit
 import UsageCore
 
-// `QuotaGoblin --status` prints your plan limits as JSON and exits, for scripts and
+// `Tokenwick --status` prints your plan limits as JSON and exits, for scripts and
 // AI agents (e.g. to pause work when the session is nearly used up). It never prints
 // the login token, only percentages, reset times and extra-usage amounts.
 if CommandLine.arguments.contains("--status") {

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Builds a release QuotaGoblin.app and a zip of it into ./build.
+# Builds a release Tokenwick.app and a zip of it into ./build.
 #
 #   VERSION=1.2.0 ./scripts/bundle.sh   # set the app version (default 0.1.0)
 #   UNIVERSAL=0 ./scripts/bundle.sh     # this Mac's architecture only (faster)
@@ -7,9 +7,9 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 source scripts/swiftpm-flags.sh
 
-APP_NAME="QuotaGoblin"
+APP_NAME="Tokenwick"
 VERSION="${VERSION:-0.1.0}"
-BUNDLE_ID="${BUNDLE_ID:-dev.quotagoblin.QuotaGoblin}"
+BUNDLE_ID="${BUNDLE_ID:-io.github.dipvibe.Tokenwick}"
 UNIVERSAL="${UNIVERSAL:-1}"
 OUT="build"
 APP="$OUT/$APP_NAME.app"
@@ -36,7 +36,7 @@ else
 fi
 
 # Menu bar icon shipped with the app (assets/). Users can still override it with their
-# own file in ~/Library/Application Support/QuotaGoblin/ (see README).
+# own file in ~/Library/Application Support/Tokenwick/ (see README).
 shopt -s nullglob
 for icon in assets/MenuBarIcon*.{pdf,svg,png}; do
   cp "$icon" "$APP/Contents/Resources/"
@@ -53,7 +53,7 @@ cat > "$APP/Contents/Info.plist" <<PLIST
   <key>CFBundleExecutable</key><string>$APP_NAME</string>
   <key>CFBundleIdentifier</key><string>$BUNDLE_ID</string>
   <key>CFBundleName</key><string>$APP_NAME</string>
-  <key>CFBundleDisplayName</key><string>Quota Goblin</string>
+  <key>CFBundleDisplayName</key><string>Tokenwick</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleShortVersionString</key><string>$VERSION</string>
   <key>CFBundleVersion</key><string>$VERSION</string>

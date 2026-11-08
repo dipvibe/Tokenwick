@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
-# Packs build/QuotaGoblin.app (made by scripts/bundle.sh) into a disk image:
-# open it, drag Quota Goblin onto the Applications shortcut, done.
+# Packs build/Tokenwick.app (made by scripts/bundle.sh) into a disk image:
+# open it, drag Tokenwick onto the Applications shortcut, done.
 #
 #   ./scripts/bundle.sh && ./scripts/dmg.sh
 #
-# Writes build/QuotaGoblin.dmg and build/QuotaGoblin.dmg.sha256.
+# Writes build/Tokenwick.dmg and build/Tokenwick.dmg.sha256.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-APP_NAME="QuotaGoblin"
+APP_NAME="Tokenwick"
 OUT="build"
 APP="$OUT/$APP_NAME.app"
 DMG="$OUT/$APP_NAME.dmg"
-VOLUME="Quota Goblin"
+VOLUME="Tokenwick"
 
 [[ -d "$APP" ]] || { echo "No $APP yet. Run ./scripts/bundle.sh first." >&2; exit 1; }
 codesign --verify --strict "$APP" || { echo "$APP has an invalid signature. Rebuild it." >&2; exit 1; }

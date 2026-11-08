@@ -1,0 +1,76 @@
+# ---------------------------------------------------------------
+# QuotaGoblin .gitignore
+# Keeps build output, personal files and anything secret off GitHub.
+# ---------------------------------------------------------------
+
+# --- Personal scratch files (not part of the app) ---------------
+# assets/ (the bundled menu bar icon) IS committed; this folder isn't.
+local-assets/
+
+# --- Secrets & credentials (should never exist here, but just in case)
+.env
+.env.*
+*.pem
+*.key
+*.p8
+*.p12
+*.cer
+*.certSigningRequest
+*.mobileprovision
+*.provisionprofile
+.credentials.json
+credentials.json
+*.keychain
+*.keychain-db
+
+# --- Swift Package Manager -------------------------------------
+.build/
+.swiftpm/
+/Packages/
+# This app has no dependencies. If it ever gets some, delete this
+# line so Package.resolved is committed (reproducible builds).
+Package.resolved
+
+# --- App build output (scripts/bundle.sh) ----------------------
+build/
+*.app
+*.zip
+*.dmg
+*.dSYM/
+*.dSYM.zip
+*.xcarchive/
+
+# --- Xcode (if someone opens Package.swift in Xcode) -----------
+*.xcodeproj
+*.xcworkspace
+xcuserdata/
+DerivedData/
+*.xcuserstate
+*.xccheckout
+*.moved-aside
+
+# --- Editors ---------------------------------------------------
+# VS Code's Swift extension regenerates .vscode/ automatically.
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.history/
+
+# --- Claude Code (personal settings & notes) -------------------
+.claude/settings.local.json
+CLAUDE.local.md
+
+# --- macOS -----------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# --- Logs & temp -----------------------------------------------
+*.log
+*.tmp
+.tmp/

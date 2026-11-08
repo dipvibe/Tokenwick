@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+# Least privilege: read-only by default. Only the release job can write.
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 30 # a hung build otherwise runs for GitHub's default of 6 hours
+    steps:
+      # Actions are pinned to full commit SHAs so a moved tag can't change what runs.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Test
+        run: ./scripts/test.sh
+
+      - name: Bundle
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then export VERSION="${GITHUB_REF_NAME#v}"; fi
+          ./scripts/bundle.sh
+          ./scripts/dmg.sh
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: QuotaGoblin
+          path: |
+            build/QuotaGoblin.zip
+            build/QuotaGoblin.zip.sha256
+            build/QuotaGoblin.dmg
+            build/QuotaGoblin.dmg.sha256
+          if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write      # create the GitHub release
+      id-token: write      # sign the build-provenance attestation (Sigstore)
+      attestations: write  # store it on GitHub
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: QuotaGoblin
+          path: build
+
+      # Signed record of which commit and workflow built each download. Anyone can check it with:
+      #   gh attestation verify QuotaGoblin.dmg --repo dipvibe/claude-goblin-menubar
+      - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: |
+            build/QuotaGoblin.zip
+            build/QuotaGoblin.dmg
+
+      - uses: softprops/action-gh-release@8a0cd651e5b2365bd640854a3fa5dfc70e4875f3 # v3.0.4
+        with:
+          # The installer downloads the zip and its checksum from releases/latest.
+          # The DMG is for downloading by hand.
+          files: |
+            build/QuotaGoblin.zip
+            build/QuotaGoblin.zip.sha256
+            build/QuotaGoblin.dmg
+            build/QuotaGoblin.dmg.sha256
+          fail_on_unmatched_files: true
+          generate_release_notes: true

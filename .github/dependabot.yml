@@ -1,0 +1,12 @@
+# Keeps the SHA-pinned GitHub Actions in .github/workflows up to date.
+# Dependabot opens a pull request (with the new SHA and version comment) when an action
+# releases a new version, so security fixes aren't missed.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]

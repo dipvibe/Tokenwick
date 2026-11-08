@@ -9,8 +9,7 @@
 > What you're looking at is a **premium, 100% vibe-coded product**, and you get it for **freeeee**. You're welcome.
 >
 > If it helps you, amazing. If something breaks, remember it was 3 a.m. Either way, please [leave a suggestion or open an issue](../../issues). I have plans for this thing… muhehehe. 😈
->
-> *(Exam results: still pending.)*
+
 
 A small macOS menu bar app that shows your Claude plan's **current session (5-hour) and weekly limits** and your **Claude Code token usage**.
 
